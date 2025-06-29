@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  bash:
+    build: ./srcs/services/bash
+    ports:
+      - "4242:4242"
+  mariadb:
+    build: ./srcs/services/mariadb
+    container_name: db
+
