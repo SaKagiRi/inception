@@ -1,11 +1,55 @@
 version: "3.9"
 
 services:
-  bash:
-    build: ./srcs/services/bash
-    ports:
-      - "4242:4242"
   mariadb:
     build: ./srcs/services/mariadb
-    container_name: db
+    container_name: mariadb
+    restart: always
+    env_file: .env
+    volumes:
+      - ./srcs/volumes/mariadb/:/var/lib/mysql
+    secrets:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+    networks:
+      - my_network 
+    ports:
+      - "3306:3306"
+  nginx:
+    build: ./srcs/services/nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+    volumes:
+      - ./srcs/volumes/www/:/var/www/html
+    networks:
+      - my_network 
+  wordpress:
+    build: ./srcs/services/wordpress
+    container_name: wordpress
+    ports:
+      - "9000:9000"
+    env_file: .env
+    secrets:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+    volumes:
+      - ./srcs/volumes/www/:/var/www/html
+    networks:
+      - my_network 
+    depends_on:
+      - mariadb
 
+
+secrets:
+  MYSQL_ROOT_PASSWORD:
+    file: ./secrets/MYSQL_ROOT_PASSWORD
+  MYSQL_PASSWORD:
+    file: ./secrets/MYSQL_PASSWORD
+
+networks:
+  my_network:
+    # name: inception
+    driver: bridge
