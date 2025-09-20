@@ -1,30 +1,40 @@
 NAME = Inseption
+DOCKER_COMPOSE = ./docker-compose.yml
+FILE = ./srcs/volumes
+DATABASE = $(addprefix $(FILE)/, $(shell ls $(FILE)))
 
-ALL: $(NAME)
+ALL: up
 
 up: $(NAME)
 
 $(NAME):
-	docker-compose up -d --build
+	docker-compose -f $(DOCKER_COMPOSE) up -d --build
 
 down:
 	docker-compose down --remove-orphans
 
-fclean:
-	sudo rm -rf srcs/volumes/mariadb/* srcs/volumes/www/*
+clean:
+	docker image prune -a
 
-re: down $(NAME)
+# TODO:
+# must down before because command compose up will create directory if not have will crash
+##
+fclean: down clean
+	sudo rm -rf $(DATABASE)
+	
+check:
+	@docker images
+	@docker ps -a
 
-bash:
-	docker-compose run bash
+re: fclean all
 
 db:
-	docker-compose run mariadb
-
-nginx:
-	docker-compose run nginx
+	docker exec -it mariadb bash
 
 wp:
-	docker-compose run wordpress
+	docker exec -it wordpress bash
 
-.PHONY: nginx wp db bash down up
+ngx:
+	docker exec -it nginx bash
+
+.PHONY: nginx wp db bash down up check

@@ -1,55 +1,54 @@
-version: "3.9"
-
 services:
   mariadb:
-    build: ./srcs/services/mariadb
     container_name: mariadb
-    restart: always
-    env_file: .env
+    build: ./srcs/services/mariadb
     volumes:
-      - ./srcs/volumes/mariadb/:/var/lib/mysql
-    secrets:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_PASSWORD
+      - ./srcs/volumes/db_data:/var/lib/mysql
+    env_file:
+      - .color
+      - .env
     networks:
-      - my_network 
-    ports:
-      - "3306:3306"
+      - inception
+    secrets:
+      - DB_PASSWD
   nginx:
-    build: ./srcs/services/nginx
     container_name: nginx
-    ports:
-      - "8080:80"
-    depends_on:
-      - mariadb
+    build: ./srcs/services/nginx
     volumes:
-      - ./srcs/volumes/www/:/var/www/html
+      - ./srcs/volumes/wp_core:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
     networks:
-      - my_network 
+      - inception
+    depends_on:
+      - wordpress
   wordpress:
-    build: ./srcs/services/wordpress
     container_name: wordpress
-    ports:
-      - "9000:9000"
-    env_file: .env
-    secrets:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_PASSWORD
+    build: ./srcs/services/wordpress
     volumes:
-      - ./srcs/volumes/www/:/var/www/html
+      - ./srcs/volumes/wp_core:/var/www/html
     networks:
-      - my_network 
+      - inception
     depends_on:
       - mariadb
-
-
-secrets:
-  MYSQL_ROOT_PASSWORD:
-    file: ./secrets/MYSQL_ROOT_PASSWORD
-  MYSQL_PASSWORD:
-    file: ./secrets/MYSQL_PASSWORD
+    env_file:
+      - .color
+      - .env
+    secrets:
+      - DB_PASSWD
+      - WP_ADMIN_PASSWD
+      - WP_USER_PASSWD
 
 networks:
-  my_network:
-    # name: inception
+  inception:
+    # external: true
     driver: bridge
+
+secrets:
+  DB_PASSWD:
+    file: ./secrets/DB_PASSWD.txt
+  WP_ADMIN_PASSWD:
+    file: ./secrets/WP_ADMIN_PASSWD.txt
+  WP_USER_PASSWD:
+    file: ./secrets/WP_USER_PASSWD.txt
