@@ -37,4 +37,7 @@ wp:
 ngx:
 	docker exec -it nginx bash
 
-.PHONY: nginx wp db bash down up check
+web:
+	docker exec -it my_web bash
+
+.PHONY: nginx wp db bash down up check web

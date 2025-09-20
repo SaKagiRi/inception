@@ -39,6 +39,11 @@ services:
       - DB_PASSWD
       - WP_ADMIN_PASSWD
       - WP_USER_PASSWD
+  my_web:
+    container_name: my_web
+    build: ./srcs/services/my_web
+    ports:
+      - "8000:8000"
 
 networks:
   inception:
