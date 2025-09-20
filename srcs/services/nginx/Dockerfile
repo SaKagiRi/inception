@@ -2,7 +2,6 @@ FROM debian:bookworm
 
 RUN apt update && apt install -y \
 	curl \ 
-	vim \ 
 	nginx \
 	&& rm -rf /var/lib/apt/lists
 
