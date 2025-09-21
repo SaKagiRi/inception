@@ -44,6 +44,20 @@ services:
     build: ./srcs/services/my_web
     ports:
       - "8000:8000"
+  ftprotocal:
+    container_name: ftprotocal
+    build: ./srcs/services/ftprotocal
+    networks:
+      - inception
+    volumes:
+      - ./srcs/volumes/wp_core:/home/ftpuser/wordpress
+    ports:
+      - "21:21"
+  test:
+    container_name: test
+    build: ./srcs/services/test
+    networks:
+      - inception
 
 networks:
   inception:
