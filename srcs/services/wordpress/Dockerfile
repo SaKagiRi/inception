@@ -9,6 +9,7 @@ RUN apt update && apt install -y \
 	&& rm -rf /var/lib/apt/lists
 
 COPY ./tools /
-RUN chmod +x /install_wp_cli.sh
+RUN chmod +x /install_wp_cli.sh /fake_sendmail.sh
 
 CMD ["./install_wp_cli.sh"]
+# CMD ["yes"]

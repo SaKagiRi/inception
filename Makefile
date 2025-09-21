@@ -46,6 +46,9 @@ ftp:
 admin:
 	docker exec -it adminer bash
 
+redis:
+	docker exec -it redis bash
+
 test:
 	docker exec -it test bash
 

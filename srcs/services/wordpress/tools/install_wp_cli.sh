@@ -1,5 +1,7 @@
 #! /bin/bash
 
+mv /fake_sendmail.sh /usr/sbin/sendmail
+
 #Set secrets
 WP_ADMIN_PASSWD=$(cat /var/run/secrets/WP_ADMIN_PASSWD)
 WP_USER_PASSWD=$(cat /var/run/secrets/WP_USER_PASSWD)
@@ -57,6 +59,13 @@ if  [ ! -f $WP_DATADIR/wp-config.php ]; then
 	# for ftp can use
 	groupadd -g 5000 wp_users
 	usermod -aG wp_users www-data
+
+	# install plugin redis
+	wp plugin install redis-cache --activate --path=/var/www/html --allow-root
+	wp config set WP_REDIS_HOST redis --type=constant --path=/var/www/html --allow-root
+	wp config set WP_CACHE true --type=constant --raw --path=/var/www/html --allow-root
+	wp redis enable --path=/var/www/html --allow-root
+
 fi
 
 sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf

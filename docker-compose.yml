@@ -62,6 +62,11 @@ services:
       - inception
     ports:
       - "8080:80"
+  redis:
+    container_name: redis
+    build: ./srcs/services/redis
+    networks:
+      - inception
   test:
     container_name: test
     build: ./srcs/services/test
