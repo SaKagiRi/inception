@@ -53,11 +53,15 @@ if  [ ! -f $WP_DATADIR/wp-config.php ]; then
 
 	# wp option update home 'https://knakto' --path=$WP_DATADIR --allow-root
 	# wp option update siteurl 'https://knakto' --path=$WP_DATADIR --allow-root
-
+	
+	# for ftp can use
+	groupadd -g 5000 wp_users
+	usermod -aG wp_users www-data
 fi
 
 sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
 
-chown -R www-data:www-data $WP_DATADIR
+chown -R www-data:wp_users $WP_DATADIR
+chmod -R 775 $WP_DATADIR # 775 for ftpuser in www-data group
 
 php-fpm8.2 -F
