@@ -3,7 +3,7 @@ DOCKER_COMPOSE = ./docker-compose.yml
 FILE = ./srcs/volumes
 DATABASE = $(addprefix $(FILE)/, $(shell ls $(FILE)))
 
-ALL: up
+all: up
 
 up: $(NAME)
 
@@ -40,4 +40,10 @@ ngx:
 web:
 	docker exec -it my_web bash
 
-.PHONY: nginx wp db bash down up check web
+ftp:
+	docker exec -it ftprotocal bash
+
+test:
+	docker exec -it test bash
+
+.PHONY: nginx wp db bash down up check web ftp
