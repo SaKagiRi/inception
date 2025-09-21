@@ -1,6 +1,6 @@
 #! /bin/bash
 
-sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
+sed -i 's|^listen = .*|listen = 127.0.0.1:9900|' /etc/php/8.2/fpm/pool.d/www.conf
 
 wget https://www.adminer.org/latest.php -O index.php
 chown -R www-data:www-data /var/www/html/adminer
