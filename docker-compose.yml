@@ -53,6 +53,13 @@ services:
       - ./srcs/volumes/wp_core:/home/ftpuser/wordpress
     ports:
       - "21:21"
+  adminer:
+    container_name: adminer
+    build: ./srcs/services/adminer
+    networks:
+      - inception
+    ports:
+      - "8080:80"
   test:
     container_name: test
     build: ./srcs/services/test

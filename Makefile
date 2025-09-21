@@ -43,6 +43,9 @@ web:
 ftp:
 	docker exec -it ftprotocal bash
 
+admin:
+	docker exec -it adminer bash
+
 test:
 	docker exec -it test bash
 
