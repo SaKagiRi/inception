@@ -67,6 +67,14 @@ services:
     build: ./srcs/services/redis
     networks:
       - inception
+  portainer:
+    container_name: portainer
+    build: ./srcs/services/portainer
+    ports:
+      - "9443:9443"
+    volumes:
+      - ./srcs/volumes/portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
   test:
     container_name: test
     build: ./srcs/services/test

@@ -49,6 +49,9 @@ admin:
 redis:
 	docker exec -it redis bash
 
+port:
+	docker exec -it portainer bash
+
 test:
 	docker exec -it test bash
 
