@@ -7,4 +7,4 @@ RUN apt update && apt install -y \
 WORKDIR /my_web
 COPY ./tools/ .
 
-CMD ["python3", "-m", "http.server", "8000"]
+ENTRYPOINT ["python3", "-m", "http.server", "8000"]

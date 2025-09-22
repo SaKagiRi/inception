@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #Set secrets
 DB_PASSWD=$(cat /var/run/secrets/DB_PASSWD)
 

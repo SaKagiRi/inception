@@ -12,4 +12,4 @@ RUN curl -L https://github.com/portainer/portainer/releases/download/2.21.4/port
 RUN mkdir -p /data
 
 # CMD ["yes"]
-CMD ["/usr/local/bin/portainer/portainer", "--data", "/data"]
+ENTRYPOINT ["/usr/local/bin/portainer/portainer", "--data", "/data"]

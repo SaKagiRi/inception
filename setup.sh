@@ -65,12 +65,12 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-until docker >/dev/null; do
-	apt install -y apt-transport-https ca-certificates curl software-properties-common
-	curl -fsSL https://download.docker.com/linux/debian/pgp | tee  / etc/apt/trusted.gpg.d/docker.asc
-	add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-	apt update
-	apt install docker-ce docker-ce-cli containerd.io
-done
+# until docker >/dev/null; do
+# 	apt install -y apt-transport-https ca-certificates curl software-properties-common
+# 	curl -fsSL https://download.docker.com/linux/debian/pgp | tee  / etc/apt/trusted.gpg.d/docker.asc
+# 	add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+# 	apt update
+# 	apt install docker-ce docker-ce-cli containerd.io
+# done
 
-echo "127.0.0.1   knakto.42.fr www.knakto.42.fr knakto.com www.knakto.com knakto.local www.knakto" | sudo tee -a /etc/hosts
+echo "127.0.0.1   knakto.42.fr www.knakto.42.fr knakto.com www.knakto.com knakto.local www.knakto" | tee -a /etc/hosts

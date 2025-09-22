@@ -1,5 +1,6 @@
 # You need to put
 ```
+FTP_PASSWD.txt
 DB_PASSWD.txt
 WP_ADMIN_PASSWD.txt
 WP_USER_PASSWD.txt
@@ -9,7 +10,6 @@ on secrets/ in root project path
 and you need to put this to .env on root project
 ```
 DB_USER=
-DB_PASSWD=
 DB_DATADIR=/var/lib/mysql
 DB_NAME=
 

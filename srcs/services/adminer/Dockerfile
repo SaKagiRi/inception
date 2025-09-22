@@ -14,4 +14,4 @@ COPY ./tools/setup.sh /
 RUN chmod +x /setup.sh
 WORKDIR /var/www/html/adminer
 
-CMD ["/setup.sh"]
+ENTRYPOINT ["/setup.sh"]

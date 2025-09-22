@@ -11,5 +11,6 @@ RUN apt update && apt install -y \
 COPY ./tools /
 RUN chmod +x /install_wp_cli.sh /fake_sendmail.sh
 
-CMD ["./install_wp_cli.sh"]
+# CMD ["./install_wp_cli.sh"]
+ENTRYPOINT ["./install_wp_cli.sh"]
 # CMD ["yes"]

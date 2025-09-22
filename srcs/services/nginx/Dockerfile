@@ -11,4 +11,4 @@ COPY ./conf/my_page.conf /etc/nginx/conf.d
 
 RUN chmod +x /run.sh
 
-CMD ["sh", "/run.sh"]
+ENTRYPOINT ["/run.sh"]

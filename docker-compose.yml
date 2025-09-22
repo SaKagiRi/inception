@@ -75,11 +75,11 @@ services:
     volumes:
       - ./srcs/volumes/portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-  test:
-    container_name: test
-    build: ./srcs/services/test
-    networks:
-      - inception
+  # test:
+  #   container_name: test
+  #   build: ./srcs/services/test
+  #   networks:
+  #     - inception
 
 networks:
   inception:

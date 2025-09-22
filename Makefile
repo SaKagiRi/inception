@@ -52,7 +52,7 @@ redis:
 port:
 	docker exec -it portainer bash
 
-test:
-	docker exec -it test bash
+# test:
+# 	docker exec -it test bash
 
-.PHONY: nginx wp db bash down up check web ftp
+.PHONY: nginx wp db bash down up check web ftp admin redis port

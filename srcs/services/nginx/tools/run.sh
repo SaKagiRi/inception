@@ -1,3 +1,7 @@
+#! /bin/bash
+
+set -e
+
 openssl genrsa -out knakto.key 2048
 
 # สร้าง certificate

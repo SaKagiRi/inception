@@ -6,4 +6,4 @@ RUN apt update && apt install -y \
 # redis-server --port 6379 --bind 0.0.0.0
 # CMD ["yes"]
 # CMD ["redis-server", "--port", "6379", "--bind", "0.0.0.0"]
-CMD ["redis-server", "--port", "6379", "--bind", "0.0.0.0", "--protected-mode", "no"]
+ENTRYPOINT ["redis-server", "--port", "6379", "--bind", "0.0.0.0", "--protected-mode", "no"]

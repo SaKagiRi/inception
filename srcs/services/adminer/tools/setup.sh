@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 sed -i 's|^listen = .*|listen = 127.0.0.1:9900|' /etc/php/8.2/fpm/pool.d/www.conf
 
 wget https://www.adminer.org/latest.php -O index.php

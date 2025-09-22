@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 mv /fake_sendmail.sh /usr/sbin/sendmail
 
 #Set secrets

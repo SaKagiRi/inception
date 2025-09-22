@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 FTP_PASSWD=$(cat /var/run/secrets/FTP_PASSWD)
 
 useradd -m ftpuser # -m for make new home
