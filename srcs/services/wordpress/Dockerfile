@@ -6,11 +6,13 @@ RUN apt update && apt install -y \
 	php8.2 \
 	php8.2-fpm \
 	php8.2-mysql \
+	tini \
 	&& rm -rf /var/lib/apt/lists
 
 COPY ./tools /
 RUN chmod +x /install_wp_cli.sh /fake_sendmail.sh
 
-# CMD ["./install_wp_cli.sh"]
-ENTRYPOINT ["./install_wp_cli.sh"]
-# CMD ["yes"]
+EXPOSE 9000
+
+ENTRYPOINT ["tini", "--"]
+CMD ["./install_wp_cli.sh"]

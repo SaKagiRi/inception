@@ -8,13 +8,19 @@ all: up
 up: $(NAME)
 
 $(NAME):
-	docker-compose -f $(DOCKER_COMPOSE) up -d --build
+	docker compose -f $(DOCKER_COMPOSE) up -d --build
 
 down:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 
 clean:
 	docker image prune -a
+
+stop:
+	docker compose stop
+
+start:
+	docker compose start
 
 # TODO:
 # must down before because command compose up will create directory if not have will crash
@@ -52,7 +58,4 @@ redis:
 port:
 	docker exec -it portainer bash
 
-# test:
-# 	docker exec -it test bash
-
-.PHONY: nginx wp db bash down up check web ftp admin redis port
+.PHONY: nginx wp db bash down up check web ftp admin redis port start stop

@@ -11,5 +11,5 @@ RUN curl -L https://github.com/portainer/portainer/releases/download/2.21.4/port
 
 RUN mkdir -p /data
 
-# CMD ["yes"]
+EXPOSE 9443
 ENTRYPOINT ["/usr/local/bin/portainer/portainer", "--data", "/data"]

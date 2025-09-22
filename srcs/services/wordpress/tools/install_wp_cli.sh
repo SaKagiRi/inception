@@ -20,6 +20,11 @@ until wp --info > /dev/null 2>&1; do
 done
 printf $GREEN"wp installed.\n"$WHITE
 
+# for ftp can use
+if ! getent group | grep 5000; then
+	groupadd -g 5000 wp_users
+	usermod -aG wp_users www-data
+fi
 
 if  [ ! -f $WP_DATADIR/wp-config.php ]; then
 	printf $RED"Is it first?!\n"$WHITE
@@ -45,7 +50,7 @@ if  [ ! -f $WP_DATADIR/wp-config.php ]; then
 	printf $BLUE"Create first user in wordpress\n"$WHITE
 	wp core install \
 	  --path=$WP_DATADIR \
-	  --url="$WP_URL" \
+	  --url="https://$DOMAIN_NAME" \
 	  --title="$WP_TITLE" \
 	  --admin_user="$WP_ADMIN_NAME" \
 	  --admin_password="$WP_ADMIN_PASSWD" \
@@ -58,9 +63,6 @@ if  [ ! -f $WP_DATADIR/wp-config.php ]; then
 	# wp option update home 'https://knakto' --path=$WP_DATADIR --allow-root
 	# wp option update siteurl 'https://knakto' --path=$WP_DATADIR --allow-root
 	
-	# for ftp can use
-	groupadd -g 5000 wp_users
-	usermod -aG wp_users www-data
 
 	# install plugin redis
 	wp plugin install redis-cache --activate --path=/var/www/html --allow-root

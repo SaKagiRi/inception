@@ -1,89 +1,107 @@
 services:
   mariadb:
     container_name: mariadb
+    image: mariadb
     build: ./srcs/services/mariadb
-    volumes:
-      - ./srcs/volumes/db_data:/var/lib/mysql
-    env_file:
-      - .color
-      - .env
     networks:
       - inception
+    volumes:
+      - ./srcs/volumes/db_data:/var/lib/mysql
+    expose:
+      - 3306
+    env_file:
+      - .env
     secrets:
       - DB_PASSWD
   nginx:
     container_name: nginx
+    image: nginx
     build: ./srcs/services/nginx
-    volumes:
-      - ./srcs/volumes/wp_core:/var/www/html
-    ports:
-      - "80:80"
-      - "443:443"
     networks:
       - inception
+    volumes:
+      - ./srcs/volumes/wp_core:/var/www/html
+    expose:
+      - 443
+    ports:
+      - "443:443"
+    env_file:
+      - .env
     depends_on:
       - wordpress
   wordpress:
     container_name: wordpress
+    image: wordpress
     build: ./srcs/services/wordpress
-    volumes:
-      - ./srcs/volumes/wp_core:/var/www/html
     networks:
       - inception
-    depends_on:
-      - mariadb
+    volumes:
+      - ./srcs/volumes/wp_core:/var/www/html
+    expose:
+      - 9000
     env_file:
-      - .color
       - .env
     secrets:
       - DB_PASSWD
       - WP_ADMIN_PASSWD
       - WP_USER_PASSWD
+    depends_on:
+      - mariadb
   my_web:
     container_name: my_web
+    image: my_web
     build: ./srcs/services/my_web
+    expose:
+      - 8000
     ports:
       - "8000:8000"
   ftprotocal:
     container_name: ftprotocal
+    image: ftprotocal
     build: ./srcs/services/ftprotocal
     networks:
       - inception
     volumes:
       - ./srcs/volumes/wp_core:/home/ftpuser/wordpress
+    expose:
+      - 21
     ports:
       - "21:21"
     secrets:
       - FTP_PASSWD
   adminer:
     container_name: adminer
+    image: adminer
     build: ./srcs/services/adminer
     networks:
       - inception
+    expose:
+      - 80
     ports:
       - "8080:80"
   redis:
     container_name: redis
+    image: redis
     build: ./srcs/services/redis
     networks:
       - inception
+    expose:
+      - 6379
   portainer:
     container_name: portainer
+    image: portainer
     build: ./srcs/services/portainer
-    ports:
-      - "9443:9443"
     volumes:
       - ./srcs/volumes/portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-  # test:
-  #   container_name: test
-  #   build: ./srcs/services/test
-  #   networks:
-  #     - inception
+    expose:
+      - 9443
+    ports:
+      - "9443:9443"
 
 networks:
   inception:
-    # external: true
+    name: inception
     driver: bridge
 
 secrets:
